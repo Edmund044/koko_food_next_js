@@ -11,15 +11,21 @@
   "dependencies": {
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
+    "@material-tailwind/react": "^1.2.3",
     "@mui/material": "^5.10.1",
     "axios": "^0.27.2",
     "dotenv": "^16.0.1",
+    "flowbite": "^1.5.2",
+    "flowbite-react": "^0.1.10",
     "next": "12.2.3",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
   "devDependencies": {
+    "autoprefixer": "^10.4.8",
     "eslint": "8.20.0",
-    "eslint-config-next": "12.2.3"
+    "eslint-config-next": "12.2.3",
+    "postcss": "^8.4.16",
+    "tailwindcss": "^3.1.8"
   }
 }
