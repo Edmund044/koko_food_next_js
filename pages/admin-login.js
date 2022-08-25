@@ -21,7 +21,7 @@ const adminLogin = () => {
           <Avatar
                 alt="KOKO FOOD"
                 src="/static/images/koko_logo.png"
-                sx={{ width: 56, height: 56 }}
+                sx={{ width: 70, height: 70 }}
           />
           <Typography component="h1" variant="h5">
           Log In to KOKO FOOD DASHBOARD
