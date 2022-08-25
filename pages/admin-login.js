@@ -36,6 +36,7 @@ const adminLogin = () => {
               name="email"
               autoComplete="email"
               autoFocus
+              variant="standard"
             />
             <TextField
               margin="normal"
@@ -46,6 +47,7 @@ const adminLogin = () => {
               type="password"
               id="password"
               autoComplete="current-password"
+              variant="standard"
             />
             <Button
               type="submit"
