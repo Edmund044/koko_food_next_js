@@ -16,7 +16,7 @@ const style = {
     boxShadow: 24,
     p: 4,
   };
-const scanToEat = () => {
+const ScanToEat = () => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -77,4 +77,4 @@ const scanToEat = () => {
     );
 }
  
-export default scanToEat;
+export default ScanToEat;
