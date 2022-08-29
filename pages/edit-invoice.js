@@ -54,7 +54,7 @@ const editInvoice = () => {
                    variant="h5"
                    fontWeight="fontWeightBold"
                    >
-              Edit Profile
+              Edit Invoice
               </Typography>
               <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
                 <TextField
@@ -91,40 +91,7 @@ const editInvoice = () => {
                                   )
                              }}
                 />
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  name="Last Name"
-                  label="Last Name"
-                  type="text"
-                  id="lastname"
-                  variant="standard"
-                  InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <AccountCircleIcon />
-                    </InputAdornment>
-                                  )
-                             }}
-                />
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  name="  Department"
-                  label="Department"
-                  type="text"
-                  id="department"
-                  variant="standard"
-                  InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <ApartmentIcon />
-                    </InputAdornment>
-                                  )
-                             }}
-                />
+               
                 <br></br>
                 <br></br>
                  <Button
@@ -151,7 +118,7 @@ const editInvoice = () => {
             sm={4}
             md={7}
             sx={{
-              backgroundImage: 'url(/static/images/edit.png)',
+              backgroundImage: 'url(/static/images/status.png)',
               backgroundRepeat: 'no-repeat',
               backgroundColor: '#00E1FD',
               backgroundSize: 'contain',
