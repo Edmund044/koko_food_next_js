@@ -10,14 +10,47 @@ import Typography from '@mui/material/Typography';
 import EmailIcon from '@mui/icons-material/Email';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ApartmentIcon from '@mui/icons-material/Apartment';
+import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
+import WorkIcon from '@mui/icons-material/Work';
+var axios = require("axios")
 const register = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
       email: data.get('email'),
-      password: data.get('password'),
+      firstname: data.get('firstname'),
+      lastname: data.get('lastname'),
+      department: data.get('department'),
+      employee_number: data.get('employee_number'),
+      designation: data.get('designation')
     });
+    axios(
+      {
+        url:"http://edmund044.pythonanywhere.com/create-employee",
+        method: "POST",
+        headers: {
+          'Access-Control-Allow-Origin' : '*',
+          'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+          },
+        data:{
+          email: data.get('email'),
+          first_name: data.get('firstname'),
+          last_name: data.get('lastname'),
+          department: data.get('department'),
+          employee_number: data.get('employee_number'),
+          designation: data.get('designation')
+        },
+        timeout: 10000
+      }
+    )
+      .then((results) => {
+        // setinitiatives(results.data)
+        console.log(results.data)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   };
     return (
       <Grid container component="main" sx={{ height: '100vh' }}>
@@ -56,7 +89,27 @@ const register = () => {
                >
           Sign up
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+          <Box component="form"  onSubmit={handleSubmit} sx={{ mt: 1 }}>
+            <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="employee_number"
+                label="Employee Number"
+                name="employee_number"
+                autoComplete="employee_number"
+                autoFocus
+                type="number"
+                variant="standard"
+                InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <FormatListNumberedIcon />
+                  </InputAdornment>
+                                )
+                          }}
+              />
+            
             <TextField
               margin="normal"
               required
@@ -75,11 +128,29 @@ const register = () => {
                               )
                          }}
             />
+             <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="designation"
+                label="Designation"
+                name="designation"
+                autoComplete="designation"
+                autoFocus
+                variant="standard"
+                InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <WorkIcon />
+                  </InputAdornment>
+                                )
+                          }}
+              />
             <TextField
               margin="normal"
               required
               fullWidth
-              name="First Name"
+              name="firstname"
               label="First Name"
               type="text"
               id="firstname"
@@ -96,7 +167,7 @@ const register = () => {
               margin="normal"
               required
               fullWidth
-              name="Last Name"
+              name="lastname"
               label="Last Name"
               type="text"
               id="lastname"
@@ -113,7 +184,7 @@ const register = () => {
               margin="normal"
               required
               fullWidth
-              name="  Department"
+              name="department"
               label="Department"
               type="text"
               id="department"

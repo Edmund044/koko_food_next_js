@@ -16,6 +16,7 @@
     "@mui/material": "^5.10.2",
     "@mui/x-data-grid": "^5.16.0",
     "axios": "^0.27.2",
+    "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "flowbite": "^1.5.2",
     "flowbite-react": "^0.1.10",
