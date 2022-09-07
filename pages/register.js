@@ -12,19 +12,11 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ApartmentIcon from '@mui/icons-material/Apartment';
 import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
 import WorkIcon from '@mui/icons-material/Work';
-var axios = require("axios")
+import axios from 'axios';
 const register = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      firstname: data.get('firstname'),
-      lastname: data.get('lastname'),
-      department: data.get('department'),
-      employee_number: data.get('employee_number'),
-      designation: data.get('designation')
-    });
     axios(
       {
         url:"http://edmund044.pythonanywhere.com/create-employee",
@@ -58,8 +50,7 @@ const register = () => {
       <CssBaseline />
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
       <Typography
-               component="h1" 
-               variant="h5"
+               variant="h3"
                fontWeight="fontWeightBold"
                style={{ mt: 3,
                     mb: 2 ,

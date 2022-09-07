@@ -1,39 +1,112 @@
-// import httpService from "./api/http-service";
-var axios = require("axios")
-const userSignIn = () => {
-    const handleUserSignin = async (event) => {
-        event.preventDefault()
-        const formData = {
-            email: event.target.email.value
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import axios from 'axios';
+import InputAdornment from '@mui/material/InputAdornment';
+import EmailIcon from '@mui/icons-material/Email';
+const UserSignLogin = () => {
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const data = new FormData(event.currentTarget);
+        axios(
+          {
+            url:"http://edmund044.pythonanywhere.com/employee-login",
+            method: "POST",
+            headers: {
+              'Access-Control-Allow-Origin' : '*',
+              'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+              },
+            data:{
+              email: data.get('email')
+            },
+            timeout: 10000
           }
-
-
-          const response = await fetch('/api/comments')
-          const data = await response.json()
-          console.log(data)
-    
-      //  const options =  {
-      //       method:'POST',
-      //       data: JSON.stringify(formData),
-      //       url:'/api/comments',
-      //       headers:{
-      //         'Content-Type': 'application/json',
-      //       },
-      //       timeout: 10000 }  
-            
-      // axios(options)
-      // .then((response)=>{
-      //   console.log(`Success message ${response}`)
-      // })
-      // .catch((err)=>{
-      //   console.log(err)
-      // })
-    
-    }
-    
+        )
+          .then((results) => {
+            // setinitiatives(results.data)
+            console.log(results.data)
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+      };
     return ( <div>
-       
-    </div> );
+    <Typography
+               variant="h3"
+               fontWeight="fontWeightBold"
+               style={{ mt: 3,
+                    mb: 2 ,
+                    color: '#00E1FD'
+              }}
+               >
+          <strong> KOKO FOOD</strong>
+          </Typography>
+          <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        
+        <Box
+          sx={{
+            marginTop: 8,
+            display: 'flex',
+            flexDirection: 'column',
+          }}
+        >
+         <Typography variant="h3"    sx={{ alignItems: 'center'}}>
+          Sign In
+          </Typography>
+          <br></br>
+          <Typography variant="subtitle1">
+          <b>If you don’t have an account register</b>
+          </Typography>
+          <Typography variant="subtitle1">
+         <b>You can <span style={{ mt: 3,
+                    mb: 2 ,
+                    color: '#00E1FD'
+              }}>Register at the reception</span></b> 
+          </Typography>
+          <Box component="form" onSubmit={handleSubmit}  noValidate sx={{ mt: 1 }}>
+          <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              variant="standard"
+              InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <EmailIcon />
+                </InputAdornment>
+                              )
+                         }}
+            />
+            <br></br>
+            <br></br>
+            <br></br>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              style={{ mt: 8,
+                    mb: 2 ,
+                    borderRadius: 28, 
+                    backgroundColor: '#00E1FD',
+                    color: '#FFFFFF'
+              }}
+            >
+              Log In
+            </Button>
+          </Box>
+        </Box>
+      </Container>
+    </div>);
 }
  
-export default userSignIn;
+export default UserSignLogin;
