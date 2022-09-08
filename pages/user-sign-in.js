@@ -30,6 +30,12 @@ const UserSignLogin = () => {
         )
           .then((results) => {
             // setinitiatives(results.data)
+            console.log(results.data.employee_id)
+            if (typeof window !== "undefined") {
+
+              localStorage.setItem("employee_id", results.data.employee_id)
+              
+              }
             router.push('/scan-to-eat')
           })
           .catch((err) => {

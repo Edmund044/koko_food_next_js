@@ -12,8 +12,27 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ApartmentIcon from '@mui/icons-material/Apartment';
 import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
 import WorkIcon from '@mui/icons-material/Work';
-import axios from 'axios';
-const register = () => {
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import { useState } from 'react';
+import { useRouter } from 'next/router'
+import VerifiedIcon from '@mui/icons-material/Verified';
+var axios = require("axios")
+const Register = () => {
+  const [open, setOpen] = useState(false);
+  const [responseMessage, setResponseMessage] = useState("");
+  const handleOpen = (message) =>{
+    responseMessage = message
+    setOpen(true);
+  } 
+  const handleClose = () => setOpen(false);
+  const router = useRouter()
+  const handleRedirect = e => {
+    router.push('/user-sign-in')
+  }
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -38,10 +57,12 @@ const register = () => {
     )
       .then((results) => {
         // setinitiatives(results.data)
-        console.log(results.data)
+        setResponseMessage(`${results.data.message}, register another employee`)
+        handleOpen()
       })
       .catch((err) => {
-        console.log(err)
+        setResponseMessage(`${err.response.data.message}`)
+        handleOpen()
       })
   };
     return (
@@ -221,8 +242,31 @@ const register = () => {
           backgroundPosition: 'center',
         }}
       />
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+       
+      >
+        <DialogTitle id="alert-dialog-title">
+        
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+          <VerifiedIcon 
+           style={ {
+                  backgroundColor: '#00E1FD',
+                  color: '#FFFFFF'
+           } }/> {responseMessage}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>OK</Button>
+        </DialogActions>
+      </Dialog>
     </Grid>
     );
 }
 
-export default register;
+export default Register;

@@ -57,12 +57,10 @@ const IndexRegister = () => {
     )
       .then((results) => {
         // setinitiatives(results.data)
-        console.log(results.data)
         setResponseMessage(`${results.data.message}, register another employee`)
         handleOpen()
       })
       .catch((err) => {
-        console.log(err)
         setResponseMessage(`${err.response.data.message}`)
         handleOpen()
       })

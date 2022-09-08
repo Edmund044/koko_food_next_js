@@ -12,6 +12,12 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ApartmentIcon from '@mui/icons-material/Apartment';
 import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
 import WorkIcon from '@mui/icons-material/Work';
+import VerifiedIcon from '@mui/icons-material/Verified';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 import axios from 'axios';
 import { useState } from 'react';
 
@@ -35,7 +41,7 @@ const EditProfile = () => {
           'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
           },
         data:{
-          employee_id:"2",
+          employee_id: localStorage.getItem("employee_id"),
           email: data.get('email'),
           first_name: data.get('firstname'),
           last_name: data.get('lastname'),
@@ -49,12 +55,12 @@ const EditProfile = () => {
       .then((results) => {
         // setinitiatives(results.data)
         console.log(results.data)
-        setResponseMessage(`${results.data.message}, register another employee`)
+        setResponseMessage(results.data.message)
         handleOpen()
       })
       .catch((err) => {
         console.log(err)
-        setResponseMessage(`${err.response.data.message}`)
+        setResponseMessage(err.response.data.message)
         handleOpen()
       })
   };
@@ -221,6 +227,29 @@ const EditProfile = () => {
             
           </Box>
         </Box>
+        <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+       
+      >
+        <DialogTitle id="alert-dialog-title">
+        
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+          <VerifiedIcon 
+           style={ {
+                  backgroundColor: '#00E1FD',
+                  color: '#FFFFFF'
+           } }/> {responseMessage}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>OK</Button>
+        </DialogActions>
+      </Dialog>
       </Grid>
       <Grid
         item
@@ -236,6 +265,7 @@ const EditProfile = () => {
         }}
       />
     </Grid>
+    
     );
 }
 
