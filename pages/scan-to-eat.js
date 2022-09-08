@@ -42,8 +42,7 @@ const ScanToEat = () => {
           'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
           },
         data:{
-          employee_id:"2",
-          meal_id:"2"
+          employee_id: localStorage.getItem("employee_id")
         },
         timeout: 10000
       }

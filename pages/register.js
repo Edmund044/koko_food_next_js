@@ -30,9 +30,6 @@ const Register = () => {
   } 
   const handleClose = () => setOpen(false);
   const router = useRouter()
-  const handleRedirect = e => {
-    router.push('/user-sign-in')
-  }
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
