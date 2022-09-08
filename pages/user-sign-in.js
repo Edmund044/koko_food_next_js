@@ -8,13 +8,15 @@ import Container from '@mui/material/Container';
 import axios from 'axios';
 import InputAdornment from '@mui/material/InputAdornment';
 import EmailIcon from '@mui/icons-material/Email';
+import { useRouter } from 'next/router'
 const UserSignLogin = () => {
+    const router = useRouter()
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         axios(
           {
-            url:"http://edmund044.pythonanywhere.com/employee-login",
+            url:"http://127.0.0.1:5000/employee-login",
             method: "POST",
             headers: {
               'Access-Control-Allow-Origin' : '*',
@@ -28,7 +30,7 @@ const UserSignLogin = () => {
         )
           .then((results) => {
             // setinitiatives(results.data)
-            console.log(results.data)
+            router.push('/scan-to-eat')
           })
           .catch((err) => {
             console.log(err)

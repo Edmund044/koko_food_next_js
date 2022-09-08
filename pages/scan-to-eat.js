@@ -5,6 +5,12 @@ import LocalDiningIcon from '@mui/icons-material/LocalDining';
 import { useState } from 'react';
 import Modal from '@mui/material/Modal';
 import VerifiedIcon from '@mui/icons-material/Verified';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import axios from 'axios';
 const style = {
     position: 'absolute',
     top: '50%',
@@ -18,8 +24,42 @@ const style = {
   };
 const ScanToEat = () => {
   const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
+  const [responseMessage, setResponseMessage] = useState("");
+  const handleOpen = (message) =>{
+    responseMessage = message
+    setOpen(true);
+  } 
   const handleClose = () => setOpen(false);
+  const handleMealTicketing = (event) => {
+    event.preventDefault();
+    // const data = new FormData(event.currentTarget);
+    axios(
+      {
+        url:"http://127.0.0.1:5000/create-transaction",
+        method: "POST",
+        headers: {
+          'Access-Control-Allow-Origin' : '*',
+          'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+          },
+        data:{
+          employee_id:"2",
+          meal_id:"2"
+        },
+        timeout: 10000
+      }
+    )
+      .then((results) => {
+        // setinitiatives(results.data)
+        console.log(results.data)
+        setResponseMessage(`${results.data.message}, register another employee`)
+        handleOpen()
+      })
+      .catch((err) => {
+        console.log(err)
+        setResponseMessage(`${err.response.data.message}, try again`)
+        handleOpen()
+      })
+  };
     return (
         <Box textAlign='center' sx={{ '& button': { m:2 } }}>
     <div>
@@ -34,7 +74,7 @@ const ScanToEat = () => {
         align="center"
         variant="contained"
         size="large"
-        onClick={handleOpen}
+        onClick={handleMealTicketing}
         startIcon={<LocalDiningIcon />}
         style={ { borderRadius: 28, 
                   backgroundColor: '#00E1FD',
@@ -73,6 +113,29 @@ const ScanToEat = () => {
         </Box>
       </Modal>
     </div> 
+    <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+       
+      >
+        <DialogTitle id="alert-dialog-title">
+        
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+          <VerifiedIcon 
+           style={ {
+                  backgroundColor: '#00E1FD',
+                  color: '#FFFFFF'
+           } }/> {responseMessage}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>OK</Button>
+        </DialogActions>
+      </Dialog>
     </Box>
     );
 }

@@ -19,7 +19,7 @@ const register = () => {
     const data = new FormData(event.currentTarget);
     axios(
       {
-        url:"http://edmund044.pythonanywhere.com/create-employee",
+        url:"http://127.0.0.1:5000/create-employee",
         method: "POST",
         headers: {
           'Access-Control-Allow-Origin' : '*',

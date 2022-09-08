@@ -63,7 +63,7 @@ const IndexRegister = () => {
       })
       .catch((err) => {
         console.log(err)
-        setResponseMessage(`${err.response.data.message}, try again`)
+        setResponseMessage(`${err.response.data.message}`)
         handleOpen()
       })
   };
@@ -73,8 +73,7 @@ const IndexRegister = () => {
       <CssBaseline />
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
       <Typography
-               component="h1" 
-               variant="h5"
+               variant="h3"
                fontWeight="fontWeightBold"
                style={{ mt: 3,
                     mb: 2 ,
