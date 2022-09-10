@@ -51,12 +51,12 @@ const GetMealTicket = () => {
       .then((results) => {
         // setinitiatives(results.data)
         console.log(results.data)
-        setResponseMessage(`${results.data.message}, register another employee`)
+        setResponseMessage(results.data.message)
         handleOpen()
       })
       .catch((err) => {
         console.log(err)
-        setResponseMessage(`${err.response.data.message}, try again`)
+        setResponseMessage(err.response.data.message)
         handleOpen()
       })
   };
