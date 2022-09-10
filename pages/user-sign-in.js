@@ -36,7 +36,7 @@ const UserSignLogin = () => {
               localStorage.setItem("employee_id", results.data.employee_id)
               
               }
-            router.push('/scan-to-eat')
+            router.push('/get-meal-ticket')
           })
           .catch((err) => {
             console.log(err)
