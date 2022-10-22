@@ -5,8 +5,43 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import { useRouter } from 'next/router';
+import axios from 'axios';
 
-const adminLogin = () => {
+const AdminLogin = () => {
+  const router = useRouter()
+  const handleSubmit = (event) => {
+      event.preventDefault();
+      const data = new FormData(event.currentTarget);
+      axios(
+        {
+          url:"http://127.0.0.1:5000/admin-login",
+          method: "POST",
+          headers: {
+            'Access-Control-Allow-Origin' : '*',
+            'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+            },
+          data:{
+            email: data.get('email'),
+            password: data.get('password')
+          },
+          timeout: 10000
+        }
+      )
+        .then((results) => {
+          // setinitiatives(results.data)
+          console.log(results.data.employee_id)
+          if (typeof window !== "undefined") {
+
+            // localStorage.setItem("admin_id", results.data.employee_id)
+            
+            }
+          router.push('/invoices')
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    };
     return ( <div>
           <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -26,7 +61,7 @@ const adminLogin = () => {
           <Typography component="h1" variant="h5">
           Log In to KOKO FOOD DASHBOARD
           </Typography>
-          <Box component="form"  noValidate sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={handleSubmit}   noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required
@@ -68,4 +103,4 @@ const adminLogin = () => {
     </div>);
 }
  
-export default adminLogin;
+export default AdminLogin;
