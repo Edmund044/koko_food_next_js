@@ -4,17 +4,11 @@ import Drawer from '@mui/material/Drawer';
 import CssBaseline from '@mui/material/CssBaseline';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import { DataGrid } from '@mui/x-data-grid'
-
+import AdminNavigation from '../components/navigations/admin-navigation'
+import axios from 'axios';
 const drawerWidth = 240;
 
 const columns = [
@@ -64,7 +58,24 @@ const columns = [
     { id: 10, invoiceDescription: 'Beef/rice/Ugali', servedPlates: '1,000 plates', amountInKsh: 'KSH 300,000', status: 'Paid', date: 'July 22, 2018 07:22:13' },
   ];
 
-const invoices = () => {
+const Invoices = () => {
+  axios(
+    {
+      url:"http://127.0.0.1:5000/retrieve-transactions",
+      method: "GET",
+      headers: {
+        'Access-Control-Allow-Origin' : '*',
+        'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+        },
+      timeout: 10000
+    }
+  )
+    .then((results) => {
+     console.log(results.data)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
     return (<div>
          <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -93,18 +104,7 @@ const invoices = () => {
       >
         <Toolbar />
         <Divider />
-        <List>
-          {['Overview', 'Served Plates', 'Invoices', 'Register', 'Edit Invoices', 'Employees'].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
+       <AdminNavigation/>
         <Divider />
         {/* <List>
           {['All mail', 'Trash', 'Spam'].map((text, index) => (
@@ -138,4 +138,4 @@ const invoices = () => {
     </div>  );
 }
  
-export default invoices;
+export default Invoices;
