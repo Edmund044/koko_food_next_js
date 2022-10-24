@@ -13,16 +13,9 @@ import { useState, useEffect } from 'react';
 const drawerWidth = 240;
 
 const columns = [
-    { field: 'Serial No.', headerName: 'ID', width: 90 },
     {
       field: 'employee_id',
       headerName: 'Employee Name',
-      width: 250,
-      editable: true,
-    },
-    {
-      field: 'id',
-      headerName: 'Food Description',
       width: 250,
       editable: true,
     },

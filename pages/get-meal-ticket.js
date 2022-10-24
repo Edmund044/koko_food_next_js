@@ -2,7 +2,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import LocalDiningIcon from '@mui/icons-material/LocalDining';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Modal from '@mui/material/Modal';
 import VerifiedIcon from '@mui/icons-material/Verified';
 import Dialog from '@mui/material/Dialog';
@@ -11,6 +11,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import axios from 'axios';
+import * as geolib from 'geolib';
 import Grid from '@mui/material/Grid';
 const style = {
     position: 'absolute',
@@ -26,6 +27,12 @@ const style = {
 const GetMealTicket = () => {
   const [open, setOpen] = useState(false);
   const [responseMessage, setResponseMessage] = useState("");
+  const [isUserCoordinatesWithinRivaanCenterFoodStationCoordinates, setStateRivaanCondition] = useState(false);
+  const [isUserCoordinatesWithinKokoplexC4SecondFloorFoodStation, setStateC4SecondFloorCondition] = useState(false);
+  const [isUserCoordinatesWithinKokoplexC3SecondFloorFoodStation, setStateC3SecondFloorCondition] = useState(false);
+  const [isUserCoordinatesWithinkokoplexC3FirstFloorFoodStation, setStateC3FirstFloorCondition] = useState(false);
+  const [visibilityStatus, setVisibilityStatus] = useState("visible");
+
   const handleOpen = (message) =>{
     responseMessage = message
     setOpen(true);
@@ -51,15 +58,70 @@ const GetMealTicket = () => {
       .then((results) => {
         // setinitiatives(results.data)
         console.log(results.data)
+        checkDistanceFromCounter()
         setResponseMessage(results.data.message)
         handleOpen()
       })
       .catch((err) => {
         console.log(err)
+        checkDistanceFromCounter()
         setResponseMessage(err.response.data.message)
         handleOpen()
       })
   };
+  useEffect(() => {
+    checkDistanceFromCounter()
+  }, [])
+  const checkDistanceFromCounter = () => {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+    const rivaanCenterFoodStationCoordinates =  { latitude: 51.5175, longitude: 7.4678 }; 
+    const kokoplexC4SecondFloorFoodStationCoordinates =  { latitude: 51.5175, longitude: 7.4678 };   
+    const kokoplexC3SecondFloorFoodStationCoordinates =  { latitude: 51.5175, longitude: 7.4678 }; 
+    const kokoplexC3FirstFloorFoodStationCoordinates =  { latitude: 51.5175, longitude: 7.4678 }; 
+
+  setStateRivaanCondition( geolib.isPointWithinRadius(
+      { latitude: position.coords.latitude, longitude: position.coords.longitude },
+      rivaanCenterFoodStationCoordinates,
+      7
+  ));
+  setStateC4SecondFloorCondition(
+    geolib.isPointWithinRadius(
+      { latitude: position.coords.latitude, longitude: position.coords.longitude },
+      kokoplexC4SecondFloorFoodStationCoordinates,
+      7
+  )
+  );
+  setStateC3SecondFloorCondition(
+  //   geolib.isPointWithinRadius(
+  //     { latitude: position.coords.latitude, longitude: position.coords.longitude },
+  //     kokoplexC3SecondFloorFoodStationCoordinates,
+  //     7
+  // )
+  true
+  );
+  setStateC3FirstFloorCondition(
+    geolib.isPointWithinRadius(
+      { latitude: position.coords.latitude, longitude: position.coords.longitude },
+      kokoplexC3FirstFloorFoodStationCoordinates,
+      7
+  )
+  );
+  setResponseMessage("Your are far away from the serving station!!")
+    console.log(
+      geolib.isPointWithinRadius(
+        { latitude: position.coords.latitude, longitude: position.coords.longitude },
+        kokoplexC3FirstFloorFoodStationCoordinates,
+        7
+    )
+
+    );
+      },
+      () => {
+          alert('Position could not be determined.');
+      }
+  );
+  }
     return (
         <Box textAlign='center' sx={{ '& button': { m:2 } }}>
     <div>
@@ -86,7 +148,9 @@ const GetMealTicket = () => {
         <Typography 
             align="center"
             variant="h5"
-            gutterBottom>
+            gutterBottom
+            onClick={checkDistanceFromCounter}
+            >
             Approach the serving counter and press the button below to get meal ticket.
         </Typography>
        
@@ -99,41 +163,13 @@ const GetMealTicket = () => {
         startIcon={<LocalDiningIcon />}
         style={ { borderRadius: 28, 
                   backgroundColor: '#00E1FD',
-                  color: '#FFFFFF'
+                  color: '#FFFFFF',
+                  visibility: visibilityStatus
            } }
         >
             GET TICKET
         </Button>
-        <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-     
-        <Box textAlign='center' sx={style}>
-          <VerifiedIcon 
-           style={ {
-                  backgroundColor: '#00E1FD',
-                  color: '#FFFFFF'
-           } }/>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Operation successful
-          </Typography>
-          <Button 
-            align="center"
-            variant="contained"
-            size="large"
-            onClick={handleClose}
-            style={ { borderRadius: 28, 
-                    backgroundColor: '#00E1FD',
-                    color: '#FFFFFF'
-           } }
-        >
-            Continue
-        </Button>
-        </Box>
-      </Modal>
+  
     </div> 
     <Dialog
         open={open}
