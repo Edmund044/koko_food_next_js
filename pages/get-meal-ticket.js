@@ -3,7 +3,6 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import LocalDiningIcon from '@mui/icons-material/LocalDining';
 import { useState, useEffect } from 'react';
-import Modal from '@mui/material/Modal';
 import VerifiedIcon from '@mui/icons-material/Verified';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -12,7 +11,6 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import axios from 'axios';
 import * as geolib from 'geolib';
-import Grid from '@mui/material/Grid';
 const style = {
     position: 'absolute',
     top: '50%',

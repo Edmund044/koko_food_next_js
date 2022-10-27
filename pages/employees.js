@@ -13,47 +13,64 @@ import { useState, useEffect } from 'react';
 const drawerWidth = 240;
 
 const columns = [
-    { field: 'Serial No.', headerName: 'ID', width: 90 },
+    { field: 'id', headerName: 'ID', width: 90 },
+    
     {
-      field: 'employee_id',
-      headerName: 'Employee Name',
+      field: 'employee_number',
+      headerName: 'Employee Number',
       width: 250,
       editable: true,
     },
     {
-      field: 'id',
-      headerName: 'Food Description',
+      field: 'email',
+      headerName: 'Email',
       width: 250,
       editable: true,
     },
     {
-      field: 'meal_id',
-      headerName: 'Meal Name',
+      field: 'first_name',
+      headerName: 'First Name',
+      width: 250,
+      editable: true,
+    },{
+      field: 'last_name',
+      headerName: 'Last Name',
+      width: 250,
+      editable: true,
+    },
+    {
+      field: 'department',
+      headerName: 'Department',
+      width: 250,
+      editable: true,
+    },
+    {
+      field: 'designation',
+      headerName: 'Designation',
       width: 250,
       editable: true,
     },
     {
       field: 'time_created',
-      headerName: 'Date',
+      headerName: 'Time Created',
       width: 250,
       editable: true,
     },
     {
-      field: 'status',
-      headerName: 'Status',
+      field: 'time_updated',
+      headerName: 'Time Updated',
       width: 250,
       editable: true,
     }
-   
   ];
   
 
-const MealTransactions = () => {
+const Employees = () => {
   const [tableData, setTableData] = useState([])
   useEffect(() => {
     axios(
       {
-        url:"http://127.0.0.1:5000/retrieve-transactions",
+        url:"http://127.0.0.1:5000/retrieve-employees",
         method: "GET",
         headers: {
           'Access-Control-Allow-Origin' : '*',
@@ -62,6 +79,7 @@ const MealTransactions = () => {
         timeout: 10000
       }
     ).then((results) => {
+      console.log(results.data.data)
       setTableData(results.data.data)
       }).catch((err) => {
         console.log(err)
@@ -121,7 +139,6 @@ const MealTransactions = () => {
         columns={columns}
         pageSize={10}
         rowsPerPageOptions={[10]}
-        checkboxSelection
         disableSelectionOnClick
         experimentalFeatures={{ newEditingApi: true }}
       />
@@ -130,4 +147,4 @@ const MealTransactions = () => {
     </div>  );
 }
  
-export default MealTransactions;
+export default Employees;

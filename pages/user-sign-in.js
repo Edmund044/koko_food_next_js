@@ -9,8 +9,22 @@ import axios from 'axios';
 import InputAdornment from '@mui/material/InputAdornment';
 import EmailIcon from '@mui/icons-material/Email';
 import { useRouter } from 'next/router'
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import VerifiedIcon from '@mui/icons-material/Verified';
+import { useState, useEffect } from 'react';
 const UserSignLogin = () => {
     const router = useRouter()
+    const [open, setOpen] = useState(false);
+    const [responseMessage, setResponseMessage] = useState("");
+    const handleOpen = (message) =>{
+      responseMessage = message
+      setOpen(true);
+    } 
+    const handleClose = () => setOpen(false);
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -40,6 +54,8 @@ const UserSignLogin = () => {
           })
           .catch((err) => {
             console.log(err)
+            setResponseMessage(err.response.data.message)
+            handleOpen()
           })
       };
     return ( <div>
@@ -112,6 +128,29 @@ const UserSignLogin = () => {
               Log In
             </Button>
           </Box>
+          <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+       
+      >
+        <DialogTitle id="alert-dialog-title">
+        
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+          <VerifiedIcon 
+           style={ {
+                  backgroundColor: '#00E1FD',
+                  color: '#FFFFFF'
+           } }/> {responseMessage}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>OK</Button>
+        </DialogActions>
+      </Dialog>
         </Box>
       </Container>
     </div>);
