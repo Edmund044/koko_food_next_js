@@ -9,31 +9,31 @@ import Divider from '@mui/material/Divider';
 import { DataGrid } from '@mui/x-data-grid'
 import AdminNavigation from '../components/navigations/admin-navigation'
 import axios from 'axios';
+import { useState, useEffect } from 'react';
 const drawerWidth = 240;
 
 const columns = [
-    { field: 'id', headerName: 'ID', width: 90 },
     {
-      field: 'invoiceDescription',
-      headerName: 'Invoice Description',
+      field: 'invoice_number',
+      headerName: 'Invoice Number',
       width: 250,
       editable: true,
     },
     {
-      field: 'servedPlates',
+      field: 'served_plates',
       headerName: 'Served Plates',
       width: 250,
       editable: true,
     },
     {
-      field: 'amountInKsh',
+      field: 'amount_in_ksh',
       headerName: 'Amount in KSH',
       width: 250,
       editable: true,
     },
     {
       field: 'status',
-      headerName: 'Status',
+      headerName: 'Is Payed?',
       width: 250,
       editable: true,
     },
@@ -44,38 +44,26 @@ const columns = [
         editable: true,
       }
   ];
-  
-  const rows = [
-    { id: 1, invoiceDescription: 'Beef/rice/Ugali', servedPlates: '1,000 plates', amountInKsh: 'KSH 300,000', status: 'Paid', date: 'July 22, 2018 07:22:13' },
-    { id: 2, invoiceDescription: 'Beef/rice/Ugali', servedPlates: '1,000 plates', amountInKsh: 'KSH 300,000', status: 'Paid', date: 'July 22, 2018 07:22:13' },
-    { id: 3, invoiceDescription: 'Beef/rice/Ugali', servedPlates: '1,000 plates', amountInKsh: 'KSH 300,000', status: 'Paid', date: 'July 22, 2018 07:22:13' },
-    { id: 4, invoiceDescription: 'Beef/rice/Ugali', servedPlates: '1,000 plates', amountInKsh: 'KSH 300,000', status: 'Paid', date: 'July 22, 2018 07:22:13'  },
-    { id: 5, invoiceDescription: 'Beef/rice/Ugali', servedPlates: '1,000 plates', amountInKsh: 'KSH 300,000', status: 'Paid', date: 'July 22, 2018 07:22:13' },
-    { id: 6, invoiceDescription: 'Beef/rice/Ugali', servedPlates: '1,000 plates', amountInKsh: 'KSH 300,000', status: 'Paid', date: 'July 22, 2018 07:22:13' },
-    { id: 7, invoiceDescription: 'Beef/rice/Ugali', servedPlates: '1,000 plates', amountInKsh: 'KSH 300,000', status: 'Paid', date: 'July 22, 2018 07:22:13' },
-    { id: 8, invoiceDescription: 'Beef/rice/Ugali', servedPlates: '1,000 plates', amountInKsh: 'KSH 300,000', status: 'Paid', date: 'July 22, 2018 07:22:13' },
-    { id: 9, invoiceDescription: 'Beef/rice/Ugali', servedPlates: '1,000 plates', amountInKsh: 'KSH 300,000', status: 'Paid', date: 'July 22, 2018 07:22:13' },
-    { id: 10, invoiceDescription: 'Beef/rice/Ugali', servedPlates: '1,000 plates', amountInKsh: 'KSH 300,000', status: 'Paid', date: 'July 22, 2018 07:22:13' },
-  ];
 
 const Invoices = () => {
-  axios(
-    {
-      url:"http://127.0.0.1:5000/retrieve-transactions",
-      method: "GET",
-      headers: {
-        'Access-Control-Allow-Origin' : '*',
-        'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-        },
-      timeout: 10000
-    }
-  )
-    .then((results) => {
-     console.log(results.data)
-    })
-    .catch((err) => {
-      console.log(err)
-    })
+  const [tableData, setTableData] = useState([])
+  useEffect(() => {
+    axios(
+      {
+        url:"http://127.0.0.1:5000/retrieve-invoices",
+        method: "GET",
+        headers: {
+          'Access-Control-Allow-Origin' : '*',
+          'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+          },
+        timeout: 10000
+      }
+    ).then((results) => {
+      setTableData(results.data.data)
+      }).catch((err) => {
+        console.log(err)
+      })
+  }, [])
     return (<div>
          <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -125,11 +113,10 @@ const Invoices = () => {
       >
         <Toolbar />
         <DataGrid
-        rows={rows}
+        rows={tableData}
         columns={columns}
         pageSize={10}
         rowsPerPageOptions={[10]}
-        checkboxSelection
         disableSelectionOnClick
         experimentalFeatures={{ newEditingApi: true }}
       />

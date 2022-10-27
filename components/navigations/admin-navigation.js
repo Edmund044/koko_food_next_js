@@ -20,7 +20,7 @@ const AdminNavigation = () => {
                 else if (text == 'Invoices'){
                   route = '/invoices'
                 }
-                else if (text == 'Edit Employee'){
+                else if (text == 'Edit Employees'){
                   route = '/edit-profile'
                 }
                 else if (text == 'List Of Employees'){

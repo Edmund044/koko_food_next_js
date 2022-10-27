@@ -14,13 +14,13 @@ const drawerWidth = 240;
 
 const columns = [
     {
-      field: 'employee_id',
+      field: 'employee_name',
       headerName: 'Employee Name',
       width: 250,
       editable: true,
     },
     {
-      field: 'meal_id',
+      field: 'meal_name',
       headerName: 'Meal Name',
       width: 250,
       editable: true,
@@ -33,7 +33,7 @@ const columns = [
     },
     {
       field: 'status',
-      headerName: 'Status',
+      headerName: 'Is Payed?',
       width: 250,
       editable: true,
     }
@@ -114,7 +114,6 @@ const MealTransactions = () => {
         columns={columns}
         pageSize={10}
         rowsPerPageOptions={[10]}
-        checkboxSelection
         disableSelectionOnClick
         experimentalFeatures={{ newEditingApi: true }}
       />
