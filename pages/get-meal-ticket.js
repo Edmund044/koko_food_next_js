@@ -41,7 +41,7 @@ const GetMealTicket = () => {
     // const data = new FormData(event.currentTarget);
     axios(
       {
-        url:"http://127.0.0.1:5000/create-transaction",
+        url:"https://0581-41-220-233-170.in.ngrok.io/create-transaction",
         method: "POST",
         headers: {
           'Access-Control-Allow-Origin' : '*',
