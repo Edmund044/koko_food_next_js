@@ -91,12 +91,11 @@ const GetMealTicket = () => {
   )
   );
   setStateC3SecondFloorCondition(
-  //   geolib.isPointWithinRadius(
-  //     { latitude: position.coords.latitude, longitude: position.coords.longitude },
-  //     kokoplexC3SecondFloorFoodStationCoordinates,
-  //     7
-  // )
-  true
+    geolib.isPointWithinRadius(
+      { latitude: position.coords.latitude, longitude: position.coords.longitude },
+      kokoplexC3SecondFloorFoodStationCoordinates,
+      7
+  )
   );
   setStateC3FirstFloorCondition(
     geolib.isPointWithinRadius(
@@ -105,15 +104,20 @@ const GetMealTicket = () => {
       7
   )
   );
-  setResponseMessage("Your are far away from the serving station!!")
-    console.log(
-      geolib.isPointWithinRadius(
-        { latitude: position.coords.latitude, longitude: position.coords.longitude },
-        kokoplexC3FirstFloorFoodStationCoordinates,
-        7
-    )
+  console.log(isUserCoordinatesWithinRivaanCenterFoodStationCoordinates)
+  console.log(isUserCoordinatesWithinKokoplexC4SecondFloorFoodStation)
+  console.log(isUserCoordinatesWithinKokoplexC3SecondFloorFoodStation)
+  console.log(isUserCoordinatesWithinkokoplexC3FirstFloorFoodStation)
+  if(
+    isUserCoordinatesWithinRivaanCenterFoodStationCoordinates == false ||
+    isUserCoordinatesWithinKokoplexC4SecondFloorFoodStation == false ||
+    isUserCoordinatesWithinKokoplexC3SecondFloorFoodStation == false ||
+    isUserCoordinatesWithinkokoplexC3FirstFloorFoodStation == false 
+    ){
 
-    );
+      setResponseMessage("Your are far away from the serving station!!")
+    }
+
       },
       () => {
           alert('Position could not be determined.');

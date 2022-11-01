@@ -10,7 +10,7 @@ const AdminNavigation = () => {
     const router = useRouter()
     return (<div>
          <List>
-          {[ 'Register Employees','Edit Employees','List Of Employees','Served Plates', 'Invoices', 'Edit Invoices'].map((text, index) => (
+          {[ 'Register Employees','Edit Employees','List Of Employees','Meal Of the day','Served Plates', 'Invoices', 'Edit Invoices'].map((text, index) => (
             <ListItem key={text} disablePadding>
               <ListItemButton onClick={() => {
                 let route = '';
@@ -19,6 +19,9 @@ const AdminNavigation = () => {
                 }
                 else if (text == 'Invoices'){
                   route = '/invoices'
+                }
+                else if (text == 'Meal Of the day'){
+                  route = '/meal-of-the-day'
                 }
                 else if (text == 'Edit Employees'){
                   route = '/edit-profile'
